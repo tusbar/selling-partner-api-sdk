@@ -98,6 +98,20 @@ jobs:
       - store_test_results:
           path: packages/api/reports/tests/
 
+  lint-clients:
+    <<: *nodejs_container
+    steps:
+      - *attach_workspace
+
+      - restore-nodejs:
+          key: v1-selling-partner-api-sdk
+
+      - run:
+          name: Run linter for clients
+          environment:
+            NODE_OPTIONS: --max_old_space_size=3800
+          command: yarn xo clients
+
   lint-packages:
     <<: *nodejs_container
     steps:
@@ -109,7 +123,7 @@ jobs:
       - run:
           name: Run linter for packages
           command: yarn xo packages
-          
+
   build:
     <<: *nodejs_container
     steps:
@@ -132,7 +146,11 @@ workflows:
       - install:
           requires:
             - checkout
-      
+
+      - lint-clients:
+          requires:
+            - install
+
       - lint-packages:
           requires:
             - install
@@ -140,7 +158,7 @@ workflows:
       - test:
           requires:
             - install
-      
+
       - build:
           requires:
             - install
