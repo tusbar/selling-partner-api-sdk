@@ -17,15 +17,17 @@ jobs:
       - run: yarn --frozen-lockfile --non-interactive
       - run: yarn generate-clients
 
-      - run: git diff
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Create Pull Request
-        id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           branch: update-models
           title: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
           commit-message: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
+          body: |
+            This is an automated PR that was automatically generated due to changes in the [Amazon Selling Partner API models](https://github.com/amzn/selling-partner-api-models).
+
+            This PR will be automatically updated if other changes occur.
