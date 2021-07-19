@@ -12,8 +12,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
-          cache: 'yarn'
+          node-version: 14
+          cache: yarn
+
       - run: yarn --frozen-lockfile --non-interactive
       - run: yarn generate-clients
 
@@ -24,10 +25,12 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: update-models
+          branch: codegen/update-models
+          delete-branch: true
           title: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
           commit-message: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
           body: |
             This is an automated pull request that was generated due to changes detected in the [Amazon Selling Partner API models](https://github.com/amzn/selling-partner-api-models).
 
             The branch associated with this PR will be automatically updated if other changes occur.
+          reviewers: My42,tusbar
