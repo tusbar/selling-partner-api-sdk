@@ -27,4 +27,5 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           branch: update-models
-          commmit-message: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
+          title: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
+          commit-message: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
