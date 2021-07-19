@@ -14,9 +14,10 @@ jobs:
         with:
           node-version: 14
           cache: yarn
-
       - run: yarn --frozen-lockfile --non-interactive
-      - run: yarn generate-clients
+
+      - name: Generate clients from models
+        run: yarn generate-clients
 
       - name: Get current date
         id: date
