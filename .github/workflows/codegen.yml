@@ -1,11 +1,12 @@
 name: Run code generation
 
 on:
+  workflow_dispatch:
   push:
     branches: [codegen]
 
 jobs:
-  build:
+  update-models:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +27,7 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: codegen/update-models
+          branch: update-models
           delete-branch: true
           title: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
           commit-message: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
