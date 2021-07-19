@@ -16,4 +16,15 @@ jobs:
           cache: 'yarn'
       - run: yarn --frozen-lockfile --non-interactive
       - run: yarn generate-clients
+
       - run: git diff
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: update-models
+          commmit-message: 'feat(clients): update models as of ${{ steps.date.outputs.date }}'
